@@ -15,7 +15,7 @@ public class FilterBot {
         Blacklist blacklist = new Blacklist();
 
         // Create JDA with bot token
-        JDA jda = new JDABuilder("NTg0MTM5MTEyOTk1NDg3Nzc0.XP6wNQ.P9SvPkxh35Ck_owa5-SRXSCI-mk").build();
+        JDA jda = new JDABuilder("NTg0MTM5MTEyOTk1NDg3Nzc0.XQGmjg.wCNZJ09HJhvhmtolXw3ZW5_-DG8").build();
 
         // Add events to JDA
         jda.addEventListener(new Interface());

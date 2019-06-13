@@ -89,7 +89,7 @@ public class Blacklist {
                 System.out.println(lines.get(i));
             }
 
-
+            // Flush and close Buffer for memory efficiency
             bufferedReader.close();
 
             // Paste File - without selected word
@@ -103,6 +103,7 @@ public class Blacklist {
                     bufferedWriter.write(lines.get(i));
             }
 
+            // Flush and close Buffer for memory efficiency
             bufferedWriter.close();
 
         } catch (IOException e) {
