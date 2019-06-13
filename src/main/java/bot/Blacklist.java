@@ -16,6 +16,7 @@ public class Blacklist {
                 list.add(word);
             }
 
+            fileReader.close();
             bufferedReader.close();
 
         } catch (FileNotFoundException e) {
@@ -54,8 +55,59 @@ public class Blacklist {
 
     }
 
+    /**
+     * Method to remove a word from the blacklisted words
+     *
+     * @param word a <code>String</code>
+     */
     public static void removeWord(String word) {
 
+        // Remove from ArrayList
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).equalsIgnoreCase(word))
+                list.remove(i);
+        }
+
+        // Remove from txt file
+        ArrayList<String> lines = new ArrayList<String>();
+        String line = null;
+
+        try {
+            // Copy File
+            FileReader fileReader = new FileReader("blacklist.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.equalsIgnoreCase(word))
+                    line.replace(word, "ignore");
+                else
+                    lines.add(line);
+            }
+
+
+            for (int i = 0; i < lines.size(); i++) {
+                System.out.println(lines.get(i));
+            }
+
+
+            bufferedReader.close();
+
+            // Paste File - without selected word
+            FileWriter fileWriter = new FileWriter("blacklist.txt");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            for (int i = 0; i < list.size(); i++) {
+                if (i < list.size() - 1)
+                    bufferedWriter.write(lines.get(i) + "\n");
+                else
+                    bufferedWriter.write(lines.get(i));
+            }
+
+            bufferedWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

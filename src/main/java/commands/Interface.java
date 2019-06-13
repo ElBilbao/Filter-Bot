@@ -42,6 +42,11 @@ public class Interface extends ListenerAdapter {
                 }
             }
 
+            // Remove word
+            else if (message[1].equalsIgnoreCase("remove") && message.length > 2) {
+                Blacklist.removeWord(message[2]);
+            }
+
         }
     }
 }
