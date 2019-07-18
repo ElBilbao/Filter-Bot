@@ -28,11 +28,17 @@ public class Interface extends ListenerAdapter {
             // List command
             else if (message[1].equalsIgnoreCase("list")) {
                 ArrayList<String> wordList = Blacklist.list;
+                String list = new String();
 
                 // Display list of words inside the blacklist
                 for (int i = 0; i < wordList.size(); i++) {
-                    event.getChannel().sendMessage(wordList.get(i)).queue();
+                    if (i < wordList.size() - 1)
+                        list += wordList.get(i) + ", ";
+                    else
+                        list += wordList.get(i);
                 }
+                event.getChannel().sendMessage(list).queue();
+
             }
 
             // Add word
@@ -40,11 +46,20 @@ public class Interface extends ListenerAdapter {
                 for (int i = 2; i < message.length; i++) {
                     Blacklist.addWord(message[i].toLowerCase());
                 }
+
+                // Inform user
+                if (message.length == 3)
+                    event.getChannel().sendMessage("Word was successfully added to the BLACKLIST!").queue();
+                else
+                    event.getChannel().sendMessage("Words were successfully added to the BLACKLIST!").queue();
             }
 
             // Remove word
             else if (message[1].equalsIgnoreCase("remove") && message.length > 2) {
                 Blacklist.removeWord(message[2]);
+
+                // Inform user
+                event.getChannel().sendMessage("Word was successfully removed to the BLACKLIST!").queue();
             }
 
         }

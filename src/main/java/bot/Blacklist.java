@@ -84,11 +84,6 @@ public class Blacklist {
                     lines.add(line);
             }
 
-
-            for (int i = 0; i < lines.size(); i++) {
-                System.out.println(lines.get(i));
-            }
-
             // Flush and close Buffer for memory efficiency
             bufferedReader.close();
 
