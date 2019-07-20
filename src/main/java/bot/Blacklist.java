@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Blacklist {
     public static ArrayList<String> list = new ArrayList<String>();
+    public static ArrayList<String> warnedList = new ArrayList<String>();
 
     public Blacklist() {
         try {
@@ -104,6 +105,28 @@ public class Blacklist {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Method used to add a user to the warned list
+     * @param name a <code>String</code> with the name of the user
+     */
+    public static void addWarned(String name) {
+        warnedList.add(name);
+    }
+
+    /**
+     * Method used to verify if a user is in the warned list
+     * @param name a <code>String</code> with the name of the user
+     * @return a <code>boolean</code> whether it appears or it doesn't
+     */
+    public static boolean check(String name) {
+        for (int i = 0; i < warnedList.size(); i++) {
+            if(warnedList.get(i).equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

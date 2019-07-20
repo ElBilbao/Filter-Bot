@@ -1,8 +1,8 @@
 package events;
 
 import bot.Blacklist;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.ArrayList;
@@ -24,7 +24,16 @@ public class Identifier extends ListenerAdapter {
                     if (message[i].equalsIgnoreCase(list.get(j))) {
                         event.getMessage().delete().queue();
                         String author = event.getAuthor().getName();
-                        event.getChannel().sendMessage(author + ", please avoid using blacklisted words.\nTo view the blacklisted words use -> !filter list").queue();
+
+                        // Check if it's the user's 1st or 2nd warning
+                        if (Blacklist.check(event.getAuthor().getName())) {
+                            Guild guild = event.getGuild();
+                            guild.mute(event.getMember(), true).queue();
+                            event.getChannel().sendMessage(author + " was muted for using profanity.\nContact an admin to be unmuted.").queue();
+                        } else {
+                            Blacklist.addWarned(event.getAuthor().getName());
+                            event.getChannel().sendMessage(author + ", please avoid using blacklisted words.\nTo view the blacklisted words use -> !filter list").queue();
+                        }
                     }
                 }
             }
