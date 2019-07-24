@@ -4,9 +4,14 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Blacklist {
-    public static ArrayList<String> list = new ArrayList<String>();
-    public static ArrayList<String> warnedList = new ArrayList<String>();
 
+    // Public variables
+    public static ArrayList<String> list = new ArrayList<String>();         // To store the list of blacklisted words
+    public static ArrayList<String> warnedList = new ArrayList<String>();   // To store the list of usernames that are warned
+
+    /**
+     * Constructor that creates an instance of the Blacklist class
+     */
     public Blacklist() {
         try {
             String word;
@@ -39,7 +44,7 @@ public class Blacklist {
     /**
      * Method to add a word to the array of blacklisted words
      *
-     * @param word a <code>String</code>
+     * @param word a <code>String</code> with a single word
      */
     public static void addWord(String word) {
         list.add(word);
@@ -59,7 +64,7 @@ public class Blacklist {
     /**
      * Method to remove a word from the blacklisted words
      *
-     * @param word a <code>String</code>
+     * @param word a <code>String</code> with a single word
      */
     public static void removeWord(String word) {
 

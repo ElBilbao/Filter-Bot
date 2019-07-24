@@ -1,6 +1,8 @@
 package commands;
 
 import bot.Blacklist;
+import bot.FilterBot;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -13,7 +15,7 @@ public class Interface extends ListenerAdapter {
         String message[] = event.getMessage().getContentRaw().split(" ");
 
         // Filter main core command
-        if (message[0].equalsIgnoreCase("!filter")) {
+        if (message[0].equalsIgnoreCase("!filter") && FilterBot.isOnline()) {
 
             // Base command
             if (message.length == 1) {
@@ -22,7 +24,7 @@ public class Interface extends ListenerAdapter {
 
             // Help command
             else if (message[1].equalsIgnoreCase("help")) {
-                // TODO
+                event.getChannel().sendMessage("Commands to use:\n- !filter list\n- !filter add [word]\n- !filter remove [word/s]\n- !filter on/off").queue();
             }
 
             // List command
@@ -62,6 +64,20 @@ public class Interface extends ListenerAdapter {
                 event.getChannel().sendMessage("Word was successfully removed to the BLACKLIST!").queue();
             }
 
+            // Turn off the filter bot (ONLY ADMINS)
+            else if (message[1].equalsIgnoreCase("off") && event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+                FilterBot.setOnline(false);
+                event.getChannel().sendMessage("Turning off...").queue();
+            }
+
+        }
+
+        // Commands available while Bot is offline
+        else if (!FilterBot.isOnline()) {
+            if(message.length > 1 && message[0].equalsIgnoreCase("!filter") && message[1].equalsIgnoreCase("on")) {
+                FilterBot.setOnline(true);
+                event.getChannel().sendMessage("I'm back online").queue();
+            }
         }
     }
 }
